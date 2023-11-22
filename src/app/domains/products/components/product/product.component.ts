@@ -9,5 +9,5 @@ import { CommonModule } from '@angular/common';
   styleUrl: './product.component.css'
 })
 export class ProductComponent {
-
+  img = 'https://picsum.photos/200/200?r=' + Math.random();
 }
