@@ -13,7 +13,8 @@ export class CounterComponent {
   @Input({required: true}) message: string = '';
 
   constructor(){
-    //Before render
+    //Before render, no async
+    //Once
     console.log('Constructor');
     console.log('-'.repeat(10)); 
   }
@@ -22,6 +23,27 @@ export class CounterComponent {
     //Before and during render
     console.log('ngOnChanges');
     console.log(changes);
+    console.log('-'.repeat(10));
+  }
+
+  ngOnInit(){
+    //Before render, async
+    //Once
+    console.log('ngOnInit');
+    console.log('-'.repeat(10));
+    console.log('duration => ' + this.duration);
+    console.log('message => ' + this.message);
+  }
+
+  ngAfterViewInit(){
+    //After render
+    //Hijos ya fueron renderizados
+    console.log('ngAfterViewInit');
+    console.log('-'.repeat(10));
+  }
+
+  ngOnDestroy(){
+    console.log('ngOnDestroy');
     console.log('-'.repeat(10));
   }
 }
