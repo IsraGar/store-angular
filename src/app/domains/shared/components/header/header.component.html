@@ -101,7 +101,7 @@
               </li>
           </ul>
       </div>
-      <p class="text-xs font-medium" *ngIf="cart.length > 0; else elseBlock">Total: {{ getTotalAmount() | currency }}</p>
+      <p class="text-xs font-medium" *ngIf="cart.length > 0; else elseBlock">Total: {{ total() | currency }}</p>
       <ng-template #elseBlock>
         <p class="text-xs font-medium">Here you will see your products 😀</p>
       </ng-template>
