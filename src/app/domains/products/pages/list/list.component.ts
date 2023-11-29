@@ -4,6 +4,7 @@ import { ProductComponent } from "../../../products/components/product/product.c
 import { Product } from '../../../shared/models/Product.model';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
 import { CartService } from '../../../shared/services/cart.service';
+import { ProductService } from '../../../shared/services/product.service';
 
 @Component({
   selector: 'app-list',
@@ -16,46 +17,17 @@ export class ListComponent {
 
   products = signal<Product[]>([]);
   private cartService = inject(CartService);
+  private productService = inject(ProductService);
 
-  constructor(){
-    const initProducts: Product[] = [
-      {
-        id: Date.now(),
-        title: 'Producto 1',
-        price: 100,
-        image: 'https://picsum.photos/200/200?r=23',
-        createdAt: new Date().toISOString()
+  ngOnInit(){
+    this.productService.getProducts().subscribe({
+      next: (prodcuts) => {
+        this.products.set(prodcuts);
       },
-      {
-        id: Date.now(),
-        title: 'Producto 2',
-        price: 200,
-        image: 'https://picsum.photos/200/200?r=24',
-        createdAt: new Date().toISOString()
-      },
-      {
-        id: Date.now(),
-        title: 'Producto 3',
-        price: 300,
-        image: 'https://picsum.photos/200/200?r=25',
-        createdAt: new Date().toISOString()
-      },
-      {
-        id: Date.now(),
-        title: 'Producto 4',
-        price: 400,
-        image: 'https://picsum.photos/200/200?r=26',
-        createdAt: new Date().toISOString()
-      },
-      {
-        id: Date.now(),
-        title: 'Producto 5',
-        price: 500,
-        image: 'https://picsum.photos/200/200?r=27',
-        createdAt: new Date().toISOString()
+      error: () => {
+        
       }
-    ];
-    this.products.set(initProducts);
+    });
   }
 
   addToCart(product: Product){
