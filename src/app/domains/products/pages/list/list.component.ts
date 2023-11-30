@@ -23,8 +23,6 @@ export class ListComponent {
     this.productService.getProducts().subscribe({
       next: (prodcuts) => {
         this.products.set(prodcuts);
-        console.log(prodcuts);
-        
       },
       error: () => {
 
