@@ -4,7 +4,7 @@
         <img
           alt="ecommerce"
           class="w-full object-cover object-center"
-          [src]="product()?.images"
+          [src]="cover()"
         />
       </div>
       <div class="flex items-center justify-center mt-1">
@@ -28,7 +28,7 @@
       </div>
     </div>
     <div class="mt-5 w-full">
-      <h2 class="text-sm title-font text-gray-500 tracking-widest">{{ product()?.category?.name }}</h2>
+      <h2 class="text-sm title-font text-gray-500 tracking-widest">{{ product()?.category?.name | uppercase }}</h2>
       <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">
         {{ product()?.title }}
       </h1>
