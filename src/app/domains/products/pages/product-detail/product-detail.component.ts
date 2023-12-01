@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ProductService } from '@shared/services/product.service';
 import { Product } from '@shared/models/Product.model';
 import { TimeAgoPipe } from '@shared/pipes/time-ago.pipe';
+import { CartService } from '@shared/services/cart.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -14,6 +15,7 @@ import { TimeAgoPipe } from '@shared/pipes/time-ago.pipe';
 export class ProductDetailComponent {
 
   private productService = inject(ProductService);
+  private cartService = inject(CartService);
   @Input() id?: string;
   product = signal<Product | null>(null);
   cover = signal('');
@@ -33,6 +35,13 @@ export class ProductDetailComponent {
 
   changeCover(newImage: string){
     this.cover.set(newImage);
+  }
+
+  addToCart(){
+    const product = this.product();
+    if(product){
+      this.cartService.addToCart(product);
+    }    
   }
 
 }
