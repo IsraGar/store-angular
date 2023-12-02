@@ -1,8 +1,11 @@
 <div class="flex space-x-4 mt-5">
     <div class="ml-2">
         <ul>
+            <li>
+                <a class="hover:underline" routerLink="/">All</a>
+            </li>
             <li *ngFor="let category of categories()">
-                <a class="hover:underline" href="">{{ category.name }}</a>
+                <a class="hover:underline" routerLink="/"[queryParams]="{categoryId: category.id}">{{ category.name }}</a>
             </li>
         </ul>
     </div>

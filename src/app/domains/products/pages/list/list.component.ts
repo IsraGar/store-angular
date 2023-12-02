@@ -1,4 +1,4 @@
-import { Component, signal, inject } from '@angular/core';
+import { Component, signal, inject, Input, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductComponent } from "@products/components/product/product.component";
 import { Product } from '@shared/models/Product.model';
@@ -7,11 +7,12 @@ import { CartService } from '@shared/services/cart.service';
 import { ProductService } from '@shared/services/product.service';
 import { CategoryService } from '@shared/services/category.service';
 import { Category } from '@shared/models/Category.model';
+import { RouterLinkWithHref } from '@angular/router';
 
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [CommonModule, ProductComponent, HeaderComponent],
+  imports: [CommonModule, ProductComponent, HeaderComponent, RouterLinkWithHref],
   templateUrl: './list.component.html',
   styleUrl: './list.component.css'
 })
@@ -22,10 +23,20 @@ export class ListComponent {
   private cartService = inject(CartService);
   private productService = inject(ProductService);
   private categoryService = inject(CategoryService);
+  @Input() categoryId?: string;
 
   ngOnInit(){
     this.getProducts();
     this.getCategories();
+  }
+
+  ngOnChanges(changes: SimpleChanges){    
+    const categoryId = changes['categoryId'];    
+    if(categoryId){
+      this.getProductsByCategory(categoryId.currentValue);
+    }else{
+      this.getProducts();
+    }
   }
 
   addToCart(product: Product){
@@ -34,6 +45,17 @@ export class ListComponent {
 
   private getProducts(){
     this.productService.getProducts().subscribe({
+      next: (prodcuts) => {
+        this.products.set(prodcuts);
+      },
+      error: () => {
+
+      }
+    });
+  }
+
+  private getProductsByCategory(categoryId: string){
+    this.productService.getProductByCategory(categoryId).subscribe({
       next: (prodcuts) => {
         this.products.set(prodcuts);
       },
